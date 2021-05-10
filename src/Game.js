@@ -68,11 +68,6 @@ class Game extends React.Component {
           colSat: colAux,
           waiting: false
         })
-        
-      /*
-        this.state.colSat[j]= response['ColSat'];
-        console.log(this.state.filaSat[i]+','+this.state.colSat[j])*/
-        
       } else {
         this.setState({
           waiting: false
