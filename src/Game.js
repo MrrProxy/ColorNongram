@@ -1,8 +1,6 @@
 import React from 'react';
 import PengineClient from './PengineClient';
 import Board from './Board';
-import Mode from './Estado';
-import Estado from './Estado';
 
 
 class Game extends React.Component {
@@ -85,9 +83,7 @@ class Game extends React.Component {
     });
   }
 
-  handleMode(){
-     alert("Estado");
-  }
+  
   
   render() {
     if (this.state.grid === null) {
@@ -104,10 +100,6 @@ class Game extends React.Component {
           filaSat={this.state.filaSat}
           colSat={this.state.colSat}
         />
-        <Estado
-          onClick={()=>this.hadleMode()}
-            
-          />
       </div>
     );
   }

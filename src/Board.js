@@ -1,7 +1,7 @@
 import React from 'react';
 import Square from './Square';
 import Clue from './Clue';
-
+// se cambio la parte del clue para verificar las filas y las columnas 
 class Board extends React.Component {
     render() {
         const numOfRows = this.props.grid.length;
@@ -28,7 +28,7 @@ class Board extends React.Component {
                 >
                     <div>{/* top-left corner square */}</div>
                     {colClues.map((clue, i) =>
-                        <Clue clue={clue} satisface={this.props.colSat[i]} key={i}/>
+                        <Clue clue={clue} pistaCompleta={this.props.colSat[i]} key={i}/>
                     )}
                 </div>
                 <div className="horizontal">
@@ -41,7 +41,7 @@ class Board extends React.Component {
                         }}
                     >
                         {rowClues.map((clue, i) =>
-                            <Clue clue={clue} satisface={this.props.filaSat[i]} key={i}/>
+                            <Clue clue={clue} pistaCompleta={this.props.filaSat[i]} key={i}/>
                         )}
                     </div>
                     <div className="board"
