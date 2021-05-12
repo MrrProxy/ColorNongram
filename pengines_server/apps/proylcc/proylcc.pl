@@ -42,26 +42,28 @@ put(Contenido, [RowN, ColN], PistasFilas, PistasColumnas, Grilla, NewGrilla, Fil
 	(FilaSat is 1 ,satisface(PistasFila,NewRow);FilaSat is 0),
 
 	% se obtiene la columna en forma de lista
-	ListaCoolumna(NewGrilla,ColN,Col),
+	hacerColumna(NewGrilla,ColN,Col),
 	
 	getElement(PistasColumnas,ColN,PistasColumna),
 	(ColSat is 1, satisface(PistasColumna,Col); ColSat is 0).
 %
 
-% ListaCoolumna(+Xs,+ColN,-Col) 
+% hacerColumna(+Xs,+ColN,-Col) 
 
-ListaCoolumna([],_ColN,[]).
-ListaCoolumna([FilaActual|Filas],ColN,[Y|Ys]):-getElement(FilaActual,ColN,Y),ListaCoolumna(Filas,ColN,Ys).
+hacerColumna([],_ColN,[]).
+hacerColumna([FilaActual|Filas],ColN,[Y|Ys]):-getElement(FilaActual,ColN,Y),hacerColumna(Filas,ColN,Ys).
 
 getElement([X|_Xs],0,X).
 getElement([_X|Xs],N,E):- N1 is N-1, getElement(Xs,N1,E).
 
-%pistaCompleta(+Lista de Pistas, +Linea) verifica si la lista verifica las pistas.
-pistaCompleta([],[]).
-pistaCompleta([N|Xs],[X|Ys]):-not(var(X)), X="#", N1 is N -1, resto(N1,Ys,Zs),pistaCompleta(Xs,Zs).
-pistaCompleta(Xs,[X|Ys]):-(var(X);X="X"),satisface(Xs,Ys).
+%satisface(+Lista de Pistas, +Linea)
+satisface([],[]).
+satisface([N|Xs],[X|Ys]):-not(var(X)), X="#", N1 is N -1, satisfacePista(N1,Ys,Zs),satisface(Xs,Zs).
+satisface(Xs,[X|Ys]):-(var(X);X="X"),satisface(Xs,Ys).
 
-resto(0,[],[]).
-resto(0,[X|Xs],Xs):-var(X);X="X".%si llego a 0 la pista, la siguiente celda tendra que ser una variable o una x
+%satisfacePista(+ValorPista,+Linea,-RestoLinea) retorna la parte de la linea que quedo sin
+%recorrer luego de verificar la pista
+satisfacePista(0,[],[]).
+satisfacePista(0,[X|Xs],Xs):-var(X) ; X="X".%si llego a 0 la pista, la siguiente celda tendra que ser una variable o una x
 
-resto(N,[X|Xs],Res):- not(var(X)), X="#", N1 is N-1,satisfacePista(N1, Xs,Res).
+satisfacePista(N,[X|Xs],Res):- not(var(X)), X="#", N1 is N-1, satisfacePista(N1, Xs,Res).

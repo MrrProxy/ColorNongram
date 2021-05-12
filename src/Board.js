@@ -9,7 +9,6 @@ class Board extends React.Component {
 
         const rowClues = this.props.rowClues;
         const colClues = this.props.colClues;
-        console.log(this.props.filaSat);
         return (
             <div className="vertical">
                 <div

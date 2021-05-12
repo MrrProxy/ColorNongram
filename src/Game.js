@@ -14,7 +14,8 @@ class Game extends React.Component {
       colClues: null,
       filaSat: null,
       colSat: null,
-      waiting: false
+      waiting: false,
+      status: 0
     };
     this.handleClick = this.handleClick.bind(this);
     this.handlePengineCreate = this.handlePengineCreate.bind(this);
@@ -37,7 +38,6 @@ class Game extends React.Component {
       }
     });
   }
-
   handleClick(i, j) {
     // No action on click if we are waiting.
     if (this.state.waiting) {
@@ -84,7 +84,10 @@ class Game extends React.Component {
     if (this.state.grid === null) {
       return null;
     }
-    
+    if(this.props.status==(this.props.rowClues + this.props.colClues )){
+      return this.props.status ;
+    }
+
     return (
       <div className="game">
         <Board
