@@ -14,8 +14,45 @@ body {
   text-align: center;
 }
 
+.paintedsquare {
+  background: #004e5c;
+  border: 1px solid #999;
+  color: #004e5c;
+  margin-right: -1px;
+  margin-top: -1px;
+}
+
 .square:focus {
   outline: none;
+}
+
+
+.circle {
+  border-radius: 50px;
+  font-size: 30px;
+  text-align: center;
+  background: #fff;
+  border: 2px solid #999;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.form-check {
+  border-radius: 10px;
+  border: 2px solid rgb(62, 112, 170);
+  margin-top: 5px;
+  font-size: 17px;
+}
+
+.label {
+  font-size: 20px;
+}
+
+.mode {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-right: 15px;
 }
 
 .board {
@@ -49,7 +86,7 @@ body {
 }
 
 .clueCompletoLinea {
-  background: #3b3b3b !important ;
+  background: #398d39 !important ;
 }
 .clue div {
   margin: 2px
@@ -66,4 +103,15 @@ body {
 
 .gameInfo {
   margin-left: 20px;
+}
+
+.gameSettings {
+  margin-top: 55px;
+  margin-right: 20px;
+  display:flex;
+  flex-direction: row;
+}
+
+.victory {
+  font-size: 50px;
 }
