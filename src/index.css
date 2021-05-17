@@ -14,12 +14,27 @@ body {
   text-align: center;
 }
 
+
+
 .paintedsquare {
   background: #004e5c;
   border: 1px solid #999;
   color: #004e5c;
   margin-right: -1px;
   margin-top: -1px;
+  animation-name: changecolor;
+  animation-duration: 2s;
+}
+
+@keyframes changecolor {
+  from {
+    color: #fff;
+    background: #fff;
+  }
+  to{
+    color: #004e5c;
+    background: #004e5c;
+  }
 }
 
 .square:focus {
@@ -27,14 +42,27 @@ body {
 }
 
 
-.circle {
+.switchbutton {
+  display:flex;
+}
+
+.switchbuttonaux {
   border-radius: 50px;
-  font-size: 30px;
   text-align: center;
-  background: #fff;
-  border: 2px solid #999;
+  background: #004e5c;
+  border: 1px solid #999;
   font-weight: bold;
   margin-top: 5px;
+}
+
+.box, .cross {
+  color: #004e5c
+}
+
+.option1, .option2 {
+  margin-top: 12px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .form-check {
@@ -86,8 +114,20 @@ body {
 }
 
 .clueCompletoLinea {
-  background: #398d39 !important ;
+  background: #398d39;
+  animation-name: changecolorclue;
+  animation-duration: 2s;
 }
+
+@keyframes changecolorclue {
+  from {
+    background: #004e5c;
+  }
+  to{
+    background: #398d39;
+  }
+}
+
 .clue div {
   margin: 2px
 }
@@ -106,12 +146,29 @@ body {
 }
 
 .gameSettings {
+  border-radius: 10px;
+  border: 1px solid #999;
+  height: 135px;
   margin-top: 55px;
   margin-right: 20px;
+  padding: 5px;
   display:flex;
   flex-direction: row;
 }
 
 .victory {
   font-size: 50px;
+  animation-duration: 3s;
+  opacity: 0;
+  animation-name: appear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

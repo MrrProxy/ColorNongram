@@ -1,7 +1,7 @@
 import React from 'react';
 import PengineClient from './PengineClient';
 import Board from './Board';
-import Circle from './Circle';
+import SwitchButton from './SwitchButton';
 import CheckBox from './CheckBox';
 
 class Game extends React.Component {
@@ -142,7 +142,7 @@ class Game extends React.Component {
           <div className="mode">
           <label className="label">Mark mode: </label>
           <div>
-          <Circle
+          <SwitchButton
               value={this.state.marcado}
               onClick={() => this.handleMark()}
             />
