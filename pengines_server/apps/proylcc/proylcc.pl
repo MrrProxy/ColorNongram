@@ -22,7 +22,7 @@ replace(X, XIndex, Y, [Xi|Xs], [Xi|XsY]):-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % put(+Contenido, +Pos, +PistasFilas, +PistasColumnas, +Grilla, -NewGrilla, -FilaSat, -ColSat).
-% FilaSat indica si la fila satisface las Pistas y ColSat indica si la columna satisface las Pistas 
+% FilaSat indica si la fila completo las Pistas y ColSat indica si la columna completo las Pistas 
 
 
 put(Contenido, [RowN, ColN], PistasFilas, PistasColumnas, Grilla, NewGrilla, FilaSat, ColSat):-
@@ -39,13 +39,13 @@ put(Contenido, [RowN, ColN], PistasFilas, PistasColumnas, Grilla, NewGrilla, Fil
 	(replace(Cell, ColN, _ , Row, NewRow), Cell == Contenido ; replace(_Cell, ColN, Contenido, Row, NewRow) ),
 	
 	getElement(PistasFilas,RowN,PistasFila),
-	(FilaSat is 1 ,satisface(PistasFila,NewRow);FilaSat is 0),
+	(FilaSat is 1 ,completo(PistasFila,NewRow);FilaSat is 0),
 
 	% se obtiene la columna en forma de lista
 	hacerColumna(NewGrilla,ColN,Col),
 	
 	getElement(PistasColumnas,ColN,PistasColumna),
-	(ColSat is 1, satisface(PistasColumna,Col); ColSat is 0).
+	(ColSat is 1, completo(PistasColumna,Col); ColSat is 0).
 %
 
 % hacerColumna(+Xs,+ColN,-Col) 
@@ -56,14 +56,11 @@ hacerColumna([FilaActual|Filas],ColN,[Y|Ys]):-getElement(FilaActual,ColN,Y),hace
 getElement([X|_Xs],0,X).
 getElement([_X|Xs],N,E):- N1 is N-1, getElement(Xs,N1,E).
 
-%satisface(+Lista de Pistas, +Linea)
-satisface([],[]).
-satisface([N|Xs],[X|Ys]):-not(var(X)), X="#", N1 is N -1, satisfacePista(N1,Ys,Zs),satisface(Xs,Zs).
-satisface(Xs,[X|Ys]):-(var(X);X="X"),satisface(Xs,Ys).
+%completo(+Lista de Pistas, +Linea) verifica si completo correctamente la condicion 
+completo([],[]).
+completo([N|Xs],[X|Ys]):-not(var(X)), X="#", N1 is N -1, completoCondincion(N1,Ys,Zs),completo(Xs,Zs).
+completo(Xs,[X|Ys]):-(var(X);X="X"),completo(Xs,Ys).
 
-%satisfacePista(+ValorPista,+Linea,-RestoLinea) retorna la parte de la linea que quedo sin
-%recorrer luego de verificar la pista
-satisfacePista(0,[],[]).
-satisfacePista(0,[X|Xs],Xs):-var(X) ; X="X".%si llego a 0 la pista, la siguiente celda tendra que ser una variable o una x
-
-satisfacePista(N,[X|Xs],Res):- not(var(X)), X="#", N1 is N-1, satisfacePista(N1, Xs,Res).
+completoCondincion(0,[],[]).
+completoCondincion(0,[X|Xs],Xs):-var(X) ; X="X".
+completoCondincion(N,[X|Xs],Res):- not(var(X)), X="#", N1 is N-1, completoCondincion(N1, Xs,Res).

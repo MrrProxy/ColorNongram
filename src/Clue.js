@@ -8,7 +8,7 @@ class Clue extends React.Component {
             status++;
         }
         return (
-            //Se modifica el color del clue s este satisface
+            //Se modifica el color del clue si este se completa
             
             <div className={this.props.pistaCompleta ===1?"clue clueCompletoLinea":"clue"} >
                 {clue.map((num, i) =>

@@ -1,5 +1,5 @@
 body {
-  font: 14px "Century Gothic", Futura, sans-serif;
+  font: 15px "Century Gothic", Futura, sans-serif;
   margin: 20px;
 }
 
@@ -49,9 +49,10 @@ body {
 .switchbuttonaux {
   border-radius: 50px;
   text-align: center;
-  background: #004e5c;
+  background: #00404b;
   border: 1px solid #999;
   font-weight: bold;
+
   margin-top: 5px;
 }
 
@@ -66,22 +67,20 @@ body {
 }
 
 .form-check {
-  border-radius: 10px;
-  border: 2px solid rgb(62, 112, 170);
+  border-radius: 15px;
+  border: 2px solid rgb(50, 106, 170);
   margin-top: 5px;
-  font-size: 17px;
+  font-size: 20px;
+  background-color: rgb(0, 109, 27);
 }
 
 .label {
-  font-size: 20px;
+  font-size: 22px;
+  font-style: italic;
+  font-size-adjust: inherit;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
-.mode {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  margin-right: 15px;
-}
 
 .board {
   display: grid;
@@ -139,6 +138,7 @@ body {
 .game {
   display: flex;
   flex-direction: row;
+  background-image: url('./Assets/img/backgroundDark.jpg');
 }
 
 .gameInfo {
@@ -146,7 +146,7 @@ body {
 }
 
 .gameSettings {
-  border-radius: 10px;
+  border-radius: 15px;
   border: 1px solid #999;
   height: 135px;
   margin-top: 55px;
@@ -154,6 +154,7 @@ body {
   padding: 5px;
   display:flex;
   flex-direction: row;
+  
 }
 
 .victory {

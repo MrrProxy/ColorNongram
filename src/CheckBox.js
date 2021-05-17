@@ -2,48 +2,48 @@ import React from 'react';
 
 class CheckBox extends React.Component {
     render() {
-        return(
+        return (
             <form>
                 <div className="form-check">
-                <label>
-                    <input
-                    type="checkbox"
-                    value={0}
-                    className="form-check-input"
-                    checked={this.props.value === '0'}
-                    onChange={this.props.onChange()}
-                    />
+                    <label>
+                        <input
+                            type="checkbox"
+                            value={0}
+                            className="form-check-input"
+                            checked={this.props.value === '0'}
+                            onChange={this.props.onChange()}
+                        />
                     Easy
                 </label>
                 </div>
 
                 <div className="form-check">
-                <label>
-                    <input
-                    type="checkbox"
-                    value={1}
-                    className="form-check-input"
-                    checked={this.props.value === '1'}
-                    onChange={this.props.onChange()}
-                    />
+                        <label>
+                            <input
+                                type="checkbox"
+                                value={1}
+                                className="form-check-input"
+                                checked={this.props.value === '1'}
+                                onChange={this.props.onChange()}
+                            />
                     Normal
                 </label>
-                </div>
+                    </div>
 
-                <div className="form-check">
-                <label>
-                    <input
-                    type="checkbox"
-                    value={2}
-                    className="form-check-input"
-                    checked={this.props.value === '2'}
-                    onChange={this.props.onChange()}
-                    />
+                    <div className="form-check">
+                        <label>
+                            <input
+                                type="checkbox"
+                                value={2}
+                                className="form-check-input"
+                                checked={this.props.value === '2'}
+                                onChange={this.props.onChange()}
+                            />
                     Hard
                 </label>
-                </div>
+                    </div>
             </form>
-            )
+        )
     }
 }
 

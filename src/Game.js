@@ -3,6 +3,7 @@ import PengineClient from './PengineClient';
 import Board from './Board';
 import SwitchButton from './SwitchButton';
 import CheckBox from './CheckBox';
+import fondoGane from './Assets/img/youWin.jpg';
 
 class Game extends React.Component {
 
@@ -120,9 +121,14 @@ class Game extends React.Component {
     }
   })
   }
-
-
-  
+/*
+  style={{  
+    backgroundImage: "url(" + "https://images.pexels.com/photos/34153/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350" + ")",
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat'
+  }}
+  */
 
   render() {
     if (this.state.grid === null) {
@@ -131,7 +137,7 @@ class Game extends React.Component {
     if(this.state.status=== 1){
       return (
         <div className="victory">
-          {"You Win"}
+          <img src={fondoGane} />
         </div>
       )
     }
