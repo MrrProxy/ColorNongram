@@ -4,6 +4,7 @@ import Board from './Board';
 import SwitchButton from './SwitchButton';
 import CheckBox from './CheckBox';
 import fondoGane from './Assets/img/youWin.jpg';
+import PantallaInicio from './PantallaInicio';
 
 class Game extends React.Component {
 
@@ -17,7 +18,7 @@ class Game extends React.Component {
       filaSat: null,
       colSat: null,
       waiting: false,
-      status: 0,
+      status: 2,
       marcado: '#',
       dificult: '0'
     };
@@ -50,24 +51,24 @@ class Game extends React.Component {
     // Build Prolog query to make the move, which will look as follows:
     // put("#",[0,1],[], [],[["X",_,_,_,_],["X",_,"X",_,_],["X",_,_,_,_],["#","#","#",_,_],[_,_,"#","#","#"]], GrillaRes, FilaSat, ColSat)
     const squaresS = JSON.stringify(this.state.grid).replaceAll('"_"', "_"); // Remove quotes for variables.
-    const pistasF =JSON.stringify(this.state.rowClues);
-    const pistasC =JSON.stringify(this.state.colClues);
-    const marcadoS =JSON.stringify(this.state.marcado);
+    const pistasF = JSON.stringify(this.state.rowClues);
+    const pistasC = JSON.stringify(this.state.colClues);
+    const marcadoS = JSON.stringify(this.state.marcado);
 
-    const queryS = 'put(' + marcadoS + ', [' + i + ',' + j + ']' 
-    + ','+ pistasF+','+pistasC+',' + squaresS + ', GrillaRes, FilaSat, ColSat)';
+    const queryS = 'put(' + marcadoS + ', [' + i + ',' + j + ']'
+      + ',' + pistasF + ',' + pistasC + ',' + squaresS + ', GrillaRes, FilaSat, ColSat)';
 
     this.setState({
       waiting: true
     });
     this.pengine.query(queryS, (success, response) => {
       if (success) {
-        const filAux=this.state.filaSat;
-        const colAux=this.state.colSat;
-        var statusAux=this.state.status;
-        filAux[i]=response['FilaSat'];
-        colAux[j]=response['ColSat'];
-        statusAux= (filAux.includes(0) || colAux.includes(0))? 0 : 1;
+        const filAux = this.state.filaSat;
+        const colAux = this.state.colSat;
+        var statusAux = this.state.status;
+        filAux[i] = response['FilaSat'];
+        colAux[j] = response['ColSat'];
+        statusAux = (filAux.includes(0) || colAux.includes(0)) ? 0 : 1;
         this.setState({
           grid: response['GrillaRes'],
           filaSat: filAux,
@@ -78,64 +79,78 @@ class Game extends React.Component {
       } else {
         this.setState({
           waiting: false
-          
+
         });
         alert("falla");
       }
     });
   }
 
-  
-  handleMark(){
+
+  handleMark() {
     var marcado = this.state.marcado.slice();
     marcado = (marcado === '#') ? 'X' : '#';
-    this.setState({marcado : marcado})
+    this.setState({ marcado: marcado })
   }
 
   handleDificult = (event) => {
     const dificult = event.target.value;
-    this.setState({dificult : dificult})
+    this.setState({ dificult: dificult })
 
     var queryS;
-    if(dificult === '0'){
+    if (dificult === '0') {
       queryS = 'init(PistasFilas, PistasColumnas, Grilla)';
     }
-    else{
-      if(dificult === '1'){
+    else {
+      if (dificult === '1') {
         queryS = 'initNormal(PistasFilas, PistasColumnas, Grilla)';
       }
-      else{
+      else {
         queryS = 'initHard(PistasFilas, PistasColumnas, Grilla)';
       }
     }
-    
+
     this.pengine.query(queryS, (success, response) => {
       if (success) {
-      this.setState({
-        grid: response['Grilla'],
-        rowClues: response['PistasFilas'],
-        colClues: response['PistasColumnas'],
-        filaSat: [].constructor(response['PistasFilas'].length),
-        colSat: [].constructor(response['PistasColumnas'].length)
-      });
-    }
-  })
+        this.setState({
+          grid: response['Grilla'],
+          rowClues: response['PistasFilas'],
+          colClues: response['PistasColumnas'],
+          filaSat: [].constructor(response['PistasFilas'].length),
+          colSat: [].constructor(response['PistasColumnas'].length)
+        });
+      }
+    })
   }
 
+  handleStatus() {
+    this.setState({ status: 1 })
+  }
 
-  render() {
+  render() {  
     if (this.state.grid === null) {
       return null;
     }
-    if(this.state.status=== 1){
+    if (this.state.status === 2) {
+      return (
+        <div alignment >
+          <button className="boton_Inicio"
+
+            
+            onClick={() => this.setState({ status: 0 })}
+          >
+          START</button>
+        </div>
+      )
+    }
+    if (this.state.status === 1) {
       return (
         <div className="victory">
           <img src={fondoGane} />
           <button
-            onClick={() => this.setState({status : 0})}
-            
+            onClick={() => this.setState({ status: 2 })}
           >
-            Cerrar</button>
+            RESTART</button>
 
         </div>
       )
@@ -145,37 +160,37 @@ class Game extends React.Component {
       <div className="game">
         <div className="gameSettings">
           <div className="mode">
-          <label className="label">Mark mode: </label>
-          <div>
-          <SwitchButton
-              value={this.state.marcado}
-              onClick={() => this.handleMark()}
-            />
+            <label className="label">Mark mode: </label>
+            <div>
+              <SwitchButton
+                value={this.state.marcado}
+                onClick={() => this.handleMark()}
+              />
+            </div>
           </div>
-          </div>
-          
+
           <div className="dif">
             <label className="label">Select dificult: </label>
             <CheckBox
               value={this.state.dificult}
               onChange={() => this.handleDificult}
             />
-          </div>  
+          </div>
         </div>
         <Board
           grid={this.state.grid}
           rowClues={this.state.rowClues}
           colClues={this.state.colClues}
-          onClick={(i, j) => this.handleClick(i,j)}
+          onClick={(i, j) => this.handleClick(i, j)}
           filaSat={this.state.filaSat}
           colSat={this.state.colSat}
         />
-        
+
       </div>
     );
   }
 
-  
+
 }
 
 export default Game;

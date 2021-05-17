@@ -1,16 +1,21 @@
+#root{
+  height: 100%;
+}
+
 html{
   height: 100%;
 }
 
-
 body {
   font: 15px "Century Gothic", Futura, sans-serif;
   height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-image: url('./Assets/img/backgroundDark.jpg');
 }
 
-#root{
-  height: 100%;
-}
+
 .square {
   background: #fff;
   border: 1px solid #999;
@@ -28,8 +33,7 @@ body {
   background: #004e5c;
   border: 1px solid #999;
   color: #004e5c;
-  margin-right: -1px;
-  margin-top: -1px;
+ 
   animation-name: changecolor;
   animation-duration: 2s;
 }
@@ -148,7 +152,6 @@ body {
   flex-direction: row;
   height: 100%;
   border: 0;
-  background-image: url('./Assets/img/backgroundDark.jpg');
 }
 
 .gameInfo {
@@ -182,4 +185,36 @@ body {
   to {
     opacity: 1;
   }
+}
+
+
+
+.boton_Inicio  {
+  display: flex;
+  flex-direction: row;
+  
+  align-items: center;
+	box-shadow:inset 0px 17px 25px -1px #fff6af;
+	background:linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
+	background-color:#ffec64;
+	border-radius:13px;
+	border:2px solid #ffaa22;
+	display:inline-block;
+	cursor:pointer;
+	color:#333333;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	font-style:italic;
+	padding:12px 30px;
+	text-decoration:none;
+	text-shadow:3px 0px 0px #ffee66;
+}
+.boton_Inicio :hover {
+	background:linear-gradient(to bottom, #ffab23 5%, #ffec64 100%);
+	background-color:#ffab23;
+}
+.Butboton_Inicio:active {
+	position:relative;
+	top:1px;
 }
