@@ -121,14 +121,7 @@ class Game extends React.Component {
     }
   })
   }
-/*
-  style={{  
-    backgroundImage: "url(" + "https://images.pexels.com/photos/34153/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350" + ")",
-    backgroundPosition: 'center',
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat'
-  }}
-  */
+
 
   render() {
     if (this.state.grid === null) {
@@ -138,6 +131,12 @@ class Game extends React.Component {
       return (
         <div className="victory">
           <img src={fondoGane} />
+          <button
+            onClick={() => this.setState({status : 0})}
+            
+          >
+            Cerrar</button>
+
         </div>
       )
     }
