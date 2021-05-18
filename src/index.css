@@ -69,7 +69,29 @@ body {
 }
 
 .box, .cross {
-  color: #004e5c
+  color: #004e5c;
+}
+
+.squarecross {
+  color: #004e5c;
+  margin-left: 2.6px;
+  margin-top: 4px;
+  animation-name: appear;
+  animation-duration: 2s;
+}
+
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.invisiblecross {
+  visibility: hidden;
 }
 
 .option1, .option2 {
@@ -152,6 +174,8 @@ body {
   flex-direction: row;
   height: 100%;
   border: 0;
+  animation-name: appear;
+  animation-duration: 3s;
 }
 
 .gameInfo {

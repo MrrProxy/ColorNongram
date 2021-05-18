@@ -11,7 +11,7 @@ class SwitchButton extends React.Component {
             <div className="option1">
             <CheckBoxOutlineBlankIcon className="box"></CheckBoxOutlineBlankIcon>  
             </div>  
-            <Switch className="switchbuttonaux" onClick={this.props.onClick}>
+            <Switch className="switchbuttonaux" color="default" onClick={this.props.onClick}>
                 {this.props.value}
             </Switch>
             <div className="option2">

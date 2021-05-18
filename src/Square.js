@@ -1,10 +1,12 @@
 import React from 'react';
+import CloseIcon from '@material-ui/icons/Close'
 
 class Square extends React.Component {
     render() {
         return (
             <button className={this.props.value === '#'? "paintedsquare" : "square"} onClick={this.props.onClick}>
-                {this.props.value !== '_' ? this.props.value : null}
+                <CloseIcon className={this.props.value === 'X'? "squarecross" : "invisiblecross"}></CloseIcon>
+                {(this.props.value === '_') || (this.props.value === 'X') ? null : this.props.value}
             </button>
         );
     }
