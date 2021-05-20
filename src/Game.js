@@ -188,7 +188,7 @@ class Game extends React.Component {
           </div>
 
           <div className="dif">
-            <label className="label">Select dificult: </label>
+            <label className="label">Select difficulty: </label>
             <CheckBox
               value={this.state.dificult}
               onChange={() => this.handleDificult}
