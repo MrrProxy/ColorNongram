@@ -15,72 +15,6 @@ body {
   background-image: url('./Assets/img/backgroundDark.jpg');
 }
 
-
-.square {
-  background: #fff;
-  border: 1px solid #999;
-  font-size: 24px;
-  font-weight: bold;
-  margin-right: -1px;
-  margin-top: -1px;
-  padding: 0;
-  text-align: center;
-}
-
-
-
-.paintedsquare {
-  background: #004e5c;
-  border: 1px solid #999;
-  color: #004e5c;
- 
-  animation-name: changecolor;
-  animation-duration: 2s;
-}
-
-@keyframes changecolor {
-  from {
-    color: #fff;
-    background: #fff;
-  }
-  to{
-    color: #004e5c;
-    background: #004e5c;
-  }
-}
-
-.square:focus {
-  outline: none;
-}
-
-
-.switchbutton {
-  display:flex;
-}
-
-.switchbuttonaux {
-  border-radius: 50px;
-  text-align: center;
-  background: #00404b;
-  border: 1px solid #999;
-  font-weight: bold;
-
-  margin-top: 5px;
-}
-
-.box, .cross {
-  color: #004e5c;
-}
-
-.squarecross {
-  color: #004e5c;
-  margin-left: 2.6px;
-  margin-top: 4px;
-  animation-name: appear;
-  animation-duration: 2s;
-}
-
-
 @keyframes appear {
   from {
     opacity: 0;
@@ -90,31 +24,33 @@ body {
   }
 }
 
-.invisiblecross {
-  visibility: hidden;
+@keyframes changecolor {
+  from {
+    background: #fff;
+  }
+  to{
+    background: #004e5c;
+  }
 }
 
-.option1, .option2 {
-  margin-top: 12px;
-  margin-left: 5px;
-  margin-right: 5px;
+@keyframes changecolorclue {
+  from {
+    background: #004e5c;
+  }
+  to{
+    background: #398d39;
+  }
 }
 
-.form-check {
-  border-radius: 15px;
-  border: 2px solid rgb(50, 106, 170);
-  margin-top: 5px;
-  font-size: 20px;
-  background-color: rgb(0, 109, 27);
-}
 
-.label {
-  font-size: 22px;
-  font-style: italic;
-  font-size-adjust: inherit;
-  font-family: Georgia, 'Times New Roman', Times, serif;
+.game {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  border: 0;
+  animation-name: appear;
+  animation-duration: 4s;
 }
-
 
 .board {
   display: grid;
@@ -152,15 +88,6 @@ body {
   animation-duration: 2s;
 }
 
-@keyframes changecolorclue {
-  from {
-    background: #004e5c;
-  }
-  to{
-    background: #398d39;
-  }
-}
-
 .clue div {
   margin: 2px
 }
@@ -169,58 +96,122 @@ body {
   flex-direction: column;
 }
 
-.game {
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  border: 0;
-  animation-name: appear;
-  animation-duration: 3s;
+.square {
+  background: #fff;
+  border: 1px solid #999;
+  color: transparent;
+  font-size: 24px;
+  font-weight: bold;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
 }
 
-.gameInfo {
-  margin-left: 20px;
+.paintedsquare {
+  background: #004e5c;
+  border: 1px solid #999;
+  color: transparent;
+  margin-right: -1px;
+  margin-top: -1px;
+  animation-name: changecolor;
+  animation-duration: 2s;
 }
+
+.squarecross {
+  color: #004e5c;
+  margin-left: 2.6px;
+  margin-top: 4px;
+  animation-name: appear;
+  animation-duration: 2s;
+}
+
+.invisiblecross {
+  visibility: hidden;
+}
+
+
 
 .gameSettings {
   border-radius: 15px;
   border: 1px solid #999;
-  height: 135px;
+  height:fit-content;
+  margin-left: 20px;
   margin-top: 55px;
-  margin-right: 20px;
+  margin-right: 30px;
   padding: 5px;
   display:flex;
   flex-direction: row;
-  
 }
 
-.victory {
-  font-size: 50px;
-  animation-duration: 3s;
-  opacity: 0;
-  animation-name: appear;
-  animation-fill-mode: forwards;
+.mode {
+  margin-right: 15px;
 }
 
-@keyframes appear {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+.switchcontainer {
+  display:flex;
+}
+
+.switchbutton {
+  border-radius: 50px;
+  text-align: center;
+  background: #00404b;
+  border: 1px solid #999;
+  font-weight: bold;
+
+  margin-top: 5px;
+}
+
+.box, .cross {
+  color: #004e5c;
+}
+
+.option1, .option2 {
+  margin-top: 12px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.form-check {
+  border-radius: 15px;
+  border: 2px solid rgb(50, 106, 170);
+  margin-top: 5px;
+  font-size: 20px;
+  background-color: rgb(0, 109, 27);
+}
+
+.check-label-e {
+  padding-right: 52%;
+}
+
+.check-label-n {
+  padding-right: 32%;
+}
+
+.check-label-h {
+  padding-right: 50%;
+}
+
+.label {
+  color: #fff;
+  font-size: 22px;
+  font-style: italic;
+  font-size-adjust: inherit;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 
+.inicio {
+  display: flex;
+  height: max-content;
+  justify-content: center;
+}
 
 .boton_Inicio  {
-  display: flex;
-  flex-direction: row;
-  
-  align-items: center;
-	box-shadow:inset 0px 17px 25px -1px #fff6af;
+  position: absolute;
+  top: 45%;
+  box-shadow:inset 0px 17px 25px -1px #fff6af;
 	background:linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
-	background-color:#ffec64;
 	border-radius:13px;
 	border:2px solid #ffaa22;
 	display:inline-block;
@@ -231,14 +222,56 @@ body {
 	font-weight:bold;
 	font-style:italic;
 	padding:12px 30px;
-	text-decoration:none;
 	text-shadow:3px 0px 0px #ffee66;
 }
-.boton_Inicio :hover {
+.boton_Inicio:hover {
 	background:linear-gradient(to bottom, #ffab23 5%, #ffec64 100%);
 	background-color:#ffab23;
 }
-.Butboton_Inicio:active {
-	position:relative;
-	top:1px;
+
+
+.victory {
+  font-size: 50px;
+  animation-duration: 5s;
+  opacity: 0;
+  animation-name: appear;
+  animation-fill-mode: forwards;
+  display: flex;
+  height: max-content;
+  justify-content: center;
+}
+
+.youwin {
+  font-size: 100px;
+  font-family: 'Times New Roman', Times, serif;
+  font-style: oblique;
+  position: absolute;
+  top: 35%;
+  background: linear-gradient(to right, #ffec64 40%, #0c0c0c 50%);
+  color: transparent;
+  background-clip: text;
+  animation-name: appear;
+  animation-duration: 7s;
+}
+
+.restart {
+  position: absolute;
+  top: 55%;
+  box-shadow:inset 0px 17px 25px -1px #fff6af;
+	background:linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
+	border-radius:13px;
+	border:2px solid #ffaa22;
+  color:#333333;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	font-style:italic;
+	padding:12px 30px;
+	text-shadow:3px 0px 0px #ffee66;
+  animation-name: appear;
+  animation-duration: 5s;
+}
+
+.restart:hover {
+	background:linear-gradient(to bottom, #ffab23 5%, #ffec64 100%);
 }

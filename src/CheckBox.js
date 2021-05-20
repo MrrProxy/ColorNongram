@@ -5,20 +5,20 @@ class CheckBox extends React.Component {
         return (
             <form>
                 <div className="form-check">
-                    <label>
-                        <input
-                            type="checkbox"
-                            value={0}
-                            className="form-check-input"
-                            checked={this.props.value === '0'}
-                            onChange={this.props.onChange()}
-                        />
-                    Easy
-                </label>
+                        <label className="check-label-e">
+                            <input
+                                type="checkbox"
+                                value={0}
+                                className="form-check-input"
+                                checked={this.props.value === '0'}
+                                onChange={this.props.onChange()}
+                            />
+                            Easy
+                        </label>
                 </div>
 
                 <div className="form-check">
-                        <label>
+                        <label className="check-label-n">
                             <input
                                 type="checkbox"
                                 value={1}
@@ -26,12 +26,12 @@ class CheckBox extends React.Component {
                                 checked={this.props.value === '1'}
                                 onChange={this.props.onChange()}
                             />
-                    Normal
-                </label>
-                    </div>
+                            Normal
+                        </label>
+                </div>
 
                     <div className="form-check">
-                        <label>
+                        <label className="check-label-h">
                             <input
                                 type="checkbox"
                                 value={2}
@@ -39,9 +39,9 @@ class CheckBox extends React.Component {
                                 checked={this.props.value === '2'}
                                 onChange={this.props.onChange()}
                             />
-                    Hard
-                </label>
-                    </div>
+                            Hard
+                        </label>
+                </div>
             </form>
         )
     }

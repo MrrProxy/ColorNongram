@@ -3,7 +3,6 @@ import PengineClient from './PengineClient';
 import Board from './Board';
 import SwitchButton from './SwitchButton';
 import CheckBox from './CheckBox';
-import fondoGane from './Assets/img/youWin.jpg';
 import PantallaInicio from './PantallaInicio';
 
 class Game extends React.Component {
@@ -19,12 +18,13 @@ class Game extends React.Component {
       colSat: null,
       waiting: false,
       status: 2,
-      marcado: '#',
+      markMode: '#',
       dificult: '0'
     };
     this.handleClick = this.handleClick.bind(this);
     this.handlePengineCreate = this.handlePengineCreate.bind(this);
     this.handleMark = this.handleMark.bind(this);
+    this.handleDificult = this.handleDificult.bind(this);
     this.pengine = new PengineClient(this.handlePengineCreate);
   }
 
@@ -36,12 +36,13 @@ class Game extends React.Component {
           grid: response['Grilla'],
           rowClues: response['PistasFilas'],
           colClues: response['PistasColumnas'],
-          filaSat: [].constructor(response['PistasFilas'].length),
-          colSat: [].constructor(response['PistasColumnas'].length)
+          filaSat: [].constructor(response['PistasFilas'].length).fill(0),
+          colSat: [].constructor(response['PistasColumnas'].length).fill(0)
         });
       }
     });
   }
+
   handleClick(i, j) {
     // No action on click if we are waiting.
     if (this.state.waiting) {
@@ -53,9 +54,9 @@ class Game extends React.Component {
     const squaresS = JSON.stringify(this.state.grid).replaceAll('"_"', "_"); // Remove quotes for variables.
     const pistasF = JSON.stringify(this.state.rowClues);
     const pistasC = JSON.stringify(this.state.colClues);
-    const marcadoS = JSON.stringify(this.state.marcado);
+    const markS = JSON.stringify(this.state.markMode);
 
-    const queryS = 'put(' + marcadoS + ', [' + i + ',' + j + ']'
+    const queryS = 'put(' + markS + ', [' + i + ',' + j + ']'
       + ',' + pistasF + ',' + pistasC + ',' + squaresS + ', GrillaRes, FilaSat, ColSat)';
 
     this.setState({
@@ -88,12 +89,17 @@ class Game extends React.Component {
 
 
   handleMark() {
-    var marcado = this.state.marcado.slice();
-    marcado = (marcado === '#') ? 'X' : '#';
-    this.setState({ marcado: marcado })
+    var markMode = this.state.markMode.slice();
+    markMode = (markMode === '#') ? 'X' : '#';
+    this.setState({ markMode: markMode })
   }
 
-  handleDificult = (event) => {
+  handleDificult(event) {
+
+    if (this.state.waiting) {
+      return;
+    }
+
     const dificult = event.target.value;
     this.setState({ dificult: dificult })
 
@@ -110,45 +116,52 @@ class Game extends React.Component {
       }
     }
 
+    this.setState({waiting : true})
+
     this.pengine.query(queryS, (success, response) => {
       if (success) {
         this.setState({
           grid: response['Grilla'],
           rowClues: response['PistasFilas'],
           colClues: response['PistasColumnas'],
-          filaSat: [].constructor(response['PistasFilas'].length),
-          colSat: [].constructor(response['PistasColumnas'].length)
+          filaSat: [].constructor(response['PistasFilas'].length).fill(0),
+          colSat: [].constructor(response['PistasColumnas'].length).fill(0)
         });
       }
     })
+
+    
+    this.setState({waiting : false})
+
   }
 
-  handleStatus() {
-    this.setState({ status: 1 })
-  }
+  
 
   render() {  
     if (this.state.grid === null) {
       return null;
     }
+
     if (this.state.status === 2) {
       return (
-        <div alignment >
-          <button className="boton_Inicio"
+        <div className="inicio">
 
-            
-            onClick={() => this.setState({ status: 0 })}
+          <button className="boton_Inicio"
+            onClick={() => {this.setState({ status: 0 })}}
           >
           START</button>
         </div>
       )
     }
+    
     if (this.state.status === 1) {
       return (
         <div className="victory">
-          <img src={fondoGane} />
-          <button
-            onClick={() => this.setState({ status: 2 })}
+
+          <div className="youwin">You win!</div>
+
+          <button className="restart"
+            onClick={() => {this.handlePengineCreate(); this.setState({ status: 2, dificult: '0'})}}
           >
             RESTART</button>
 
@@ -158,12 +171,14 @@ class Game extends React.Component {
 
     return (
       <div className="game">
+
         <div className="gameSettings">
+
           <div className="mode">
             <label className="label">Mark mode: </label>
             <div>
               <SwitchButton
-                value={this.state.marcado}
+                value={this.state.markMode}
                 onClick={() => this.handleMark()}
               />
             </div>
@@ -177,6 +192,7 @@ class Game extends React.Component {
             />
           </div>
         </div>
+
         <Board
           grid={this.state.grid}
           rowClues={this.state.rowClues}
@@ -189,8 +205,6 @@ class Game extends React.Component {
       </div>
     );
   }
-
-
 }
 
 export default Game;

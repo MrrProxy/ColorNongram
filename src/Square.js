@@ -6,7 +6,7 @@ class Square extends React.Component {
         return (
             <button className={this.props.value === '#'? "paintedsquare" : "square"} onClick={this.props.onClick}>
                 <CloseIcon className={this.props.value === 'X'? "squarecross" : "invisiblecross"}></CloseIcon>
-                {(this.props.value === '_') || (this.props.value === 'X') ? null : this.props.value}
+                {this.props.value === '_'? null : this.props.value}
             </button>
         );
     }

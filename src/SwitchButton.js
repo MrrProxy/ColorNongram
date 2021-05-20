@@ -7,16 +7,16 @@ import CloseIcon from '@material-ui/icons/Close'
 class SwitchButton extends React.Component {
     render() {
         return (
-            <div className="switchbutton">
-            <div className="option1">
-            <CheckBoxOutlineBlankIcon className="box"></CheckBoxOutlineBlankIcon>  
-            </div>  
-            <Switch className="switchbuttonaux" color="default" onClick={this.props.onClick}>
-                {this.props.value}
-            </Switch>
-            <div className="option2">
-            <CloseIcon className="cross"></CloseIcon>
-            </div>
+            <div className="switchcontainer">
+                <div className="option1">
+                <CheckBoxOutlineBlankIcon className="box"></CheckBoxOutlineBlankIcon>  
+                </div>  
+                <Switch className="switchbutton" color="default" onClick={this.props.onClick}>
+                    {this.props.value}
+                </Switch>
+                <div className="option2">
+                <CloseIcon className="cross"></CloseIcon>
+                </div>
             </div>
         );
     }

@@ -1,7 +1,6 @@
 import React from 'react';
 import Square from './Square';
 import Clue from './Clue';
-// se cambio la parte del clue para verificar las filas y las columnas 
 class Board extends React.Component {
     render() {
         const numOfRows = this.props.grid.length;
