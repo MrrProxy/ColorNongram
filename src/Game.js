@@ -4,6 +4,7 @@ import Board from './Board';
 import SwitchButton from './SwitchButton';
 import CheckBox from './CheckBox';
 import PantallaInicio from './PantallaInicio';
+import imgInicio from './Assets/img/imagenInicio.png';
 
 class Game extends React.Component {
 
@@ -144,9 +145,11 @@ class Game extends React.Component {
 
     if (this.state.status === 2) {
       return (
-        <div className="inicio">
+        <div className="victory ">
+          <div className="tituloInicio">Nonogram Game</div>
+          <img className="imagenInicio" src={imgInicio}></img>
 
-          <button className="boton_Inicio"
+          <button className="boton_Inicio" type="button"
             onClick={() => {this.setState({ status: 0 })}}
           >
           START</button>
