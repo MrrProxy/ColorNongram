@@ -52,14 +52,7 @@ body {
   animation-duration: 4s;
 }
 
-.inicio {
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  border: 0;
-  animation-name: appear;
-  animation-duration: 4s;
-}
+
 
 .board {
   display: grid;
@@ -129,8 +122,8 @@ body {
 
 .squarecross {
   color: #004e5c;
-  margin-left: 2.6px;
-  margin-top: 4px;
+  margin-left: 1.55px;
+  margin-top: 7px;
   animation-name: appear;
   animation-duration: 2s;
 }
@@ -190,15 +183,15 @@ body {
 }
 
 .check-label-e {
-  padding-right: 52%;
+  padding-right: 59%;
 }
 
 .check-label-n {
-  padding-right: 32%;
+  padding-right: 42%;
 }
 
 .check-label-h {
-  padding-right: 50%;
+  padding-right: 56%;
 }
 
 .label {
@@ -210,7 +203,8 @@ body {
 }
 
 
-.inicio {
+.initial-container, .final-container {
+  font-size: 50px;
   display: flex;
   height: max-content;
   justify-content: center;
@@ -245,6 +239,8 @@ body {
   border-radius: 20%;
   width: 150px;
   height: 150px;
+  animation-name: appear;
+  animation-duration: 5s;
 }
 .tituloInicio{
   font-size: 100px;
@@ -260,16 +256,6 @@ body {
   
 }
 
-.victory {
-  font-size: 50px;
-  animation-duration: 5s;
-  opacity: 0;
-  animation-name: appear;
-  animation-fill-mode: forwards;
-  display: flex;
-  height: max-content;
-  justify-content: center;
-}
 
 .youwin {
   font-size: 100px;

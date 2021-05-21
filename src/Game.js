@@ -3,7 +3,6 @@ import PengineClient from './PengineClient';
 import Board from './Board';
 import SwitchButton from './SwitchButton';
 import CheckBox from './CheckBox';
-import PantallaInicio from './PantallaInicio';
 import imgInicio from './Assets/img/imagenInicio.png';
 
 class Game extends React.Component {
@@ -145,8 +144,10 @@ class Game extends React.Component {
 
     if (this.state.status === 2) {
       return (
-        <div className="victory ">
+        <div className="initial-container">
+
           <div className="tituloInicio">Nonogram Game</div>
+          
           <img className="imagenInicio" src={imgInicio}></img>
 
           <button className="boton_Inicio" type="button"
@@ -159,7 +160,7 @@ class Game extends React.Component {
     
     if (this.state.status === 1) {
       return (
-        <div className="victory">
+        <div className="final-container">
 
           <div className="youwin">You win!</div>
 
