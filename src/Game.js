@@ -2,6 +2,7 @@ import React from 'react';
 import PengineClient from './PengineClient';
 import Board from './Board';
 import SwitchButton from './SwitchButton';
+import {Switch} from '@material-ui/core';
 import CheckBox from './CheckBox';
 import imgInicio from './Assets/img/imagenInicio.png';
 
@@ -12,6 +13,7 @@ class Game extends React.Component {
     super(props);
     this.state = {
       grid: null,
+      solvedGrid: null,
       rowClues: null,
       colClues: null,
       filaSat: null,
@@ -23,6 +25,7 @@ class Game extends React.Component {
     };
     this.handleClick = this.handleClick.bind(this);
     this.handlePengineCreate = this.handlePengineCreate.bind(this);
+    this.handleSolve = this.handleSolve.bind(this);
     this.handleMark = this.handleMark.bind(this);
     this.handleDificult = this.handleDificult.bind(this);
     this.pengine = new PengineClient(this.handlePengineCreate);
@@ -38,6 +41,22 @@ class Game extends React.Component {
           colClues: response['PistasColumnas'],
           filaSat: [].constructor(response['PistasFilas'].length).fill(0),
           colSat: [].constructor(response['PistasColumnas'].length).fill(0)
+        });
+      }
+      this.handleSolve();
+    });
+  }
+
+  handleSolve(){
+    const squaresS = JSON.stringify(this.state.grid).replaceAll('"_"', "_");
+    const pistasF = JSON.stringify(this.state.rowClues);
+    const pistasC = JSON.stringify(this.state.colClues);
+
+    const queryJ = 'grid_solve(' + squaresS + ', ' + pistasF + ', ' + pistasC + ', SolvedGrid)';
+    this.pengine.query(queryJ, (success, response) => {
+      if (success) {
+        this.setState({
+          solvedGrid: response['SolvedGrid']
         });
       }
     });
@@ -128,8 +147,8 @@ class Game extends React.Component {
           colSat: [].constructor(response['PistasColumnas'].length).fill(0)
         });
       }
+      this.handleSolve();
     })
-
     
     this.setState({waiting : false})
 
@@ -195,13 +214,20 @@ class Game extends React.Component {
               onChange={() => this.handleDificult}
             />
           </div>
+
+          <div className="solve">
+            <Switch
+              onClick={() => {this.setState({status: ((this.state.status === 3)? 0 : 3)})}}
+            />
+          </div>
         </div>
 
+        
         <Board
-          grid={this.state.grid}
+          grid= {(this.state.status === 0)? this.state.grid : this.state.solvedGrid}
           rowClues={this.state.rowClues}
           colClues={this.state.colClues}
-          onClick={(i, j) => this.handleClick(i, j)}
+          onClick={(this.state.status === 0)? (i, j) => this.handleClick(i, j) : (i, j) => {}}
           filaSat={this.state.filaSat}
           colSat={this.state.colSat}
         />

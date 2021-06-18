@@ -1,6 +1,6 @@
 :- module(proylcc,
 	[  
-		put/8
+		put/8, grid_solve/4
 	]).
 
 :-use_module(library(lists)).
@@ -64,3 +64,48 @@ completo(Xs,[X|Ys]):-(var(X);X="X"),completo(Xs,Ys).
 completoCondincion(0,[],[]).
 completoCondincion(0,[X|Xs],Xs):-var(X) ; X="X".
 completoCondincion(N,[X|Xs],Res):- not(var(X)), X="#", N1 is N-1, completoCondincion(N1, Xs,Res).
+
+%--------------------------- Funcionalidad Proyecto 2 --------------------------------------------------------
+
+grid_solve(Grid, RowClues, ColClues, SolvedGrid):-
+    length(ColClues, NumOfColumns),
+    generarColumnas(Grid, (NumOfColumns - 1), Columns),
+    reverse(Columns, RColumns),
+    grid_filter(Grid, RowClues, RColumns, ColClues, SolvedGrid).
+
+
+row_solution([],[]).
+row_solution(Row, [ClueHead|ClueTail]) :-
+    generate_possible_X(Row, SpacedRow),
+    generate_painted_part(SpacedRow, PaintedRow, ClueHead),
+    (ClueTail \= [], generate_obligatory_X(PaintedRow, SolutionRow);
+     ClueTail = [], generate_possible_X(PaintedRow, SolutionRow)),
+    row_solution(SolutionRow, ClueTail).
+
+generate_possible_X(Row, Row).
+generate_possible_X(["X"|Row], RowTail) :-
+    generate_possible_X(Row, RowTail).
+
+generate_painted_part(Row, Row, 0).
+generate_painted_part(["#"|Row], RowTail, N) :-
+    N > 0,
+    N1 is N - 1,
+    generate_painted_part(Row, RowTail, N1).
+
+generate_obligatory_X(["X"|Row],Row).
+
+
+
+grid_filter([], [], [], [], []).
+grid_filter([Row|RowTail], [RowClues|RowCluesTail], [Column|ColumnTail],
+           [ColClues|ColCluesTail], [Solutions|SolutionsTail]):-
+    row_solution(Row, RowClues),
+    row_solution(Column, ColClues),
+    Solutions = Row,
+    grid_filter(RowTail, RowCluesTail, ColumnTail, ColCluesTail, SolutionsTail).
+
+generarColumnas(_Filas, -1, []).
+generarColumnas(Filas, NumCols, [Columna|Columnas]):-
+    hacerColumna(Filas, NumCols, Columna),
+    NumColsAux is NumCols - 1,
+    generarColumnas(Filas, NumColsAux, Columnas).
