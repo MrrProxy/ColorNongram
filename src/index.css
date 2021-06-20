@@ -283,6 +283,32 @@ body {
   animation-name: appear;
   animation-duration: 7s;
 }
+.btnsolve {
+  background: #3498db;
+  background-image: -webkit-linear-gradient(top, #3498db, #0a2536);
+  background-image: -moz-linear-gradient(top, #3498db, #0a2536);
+  background-image: -ms-linear-gradient(top, #3498db, #0a2536);
+  background-image: -o-linear-gradient(top, #3498db, #0a2536);
+  background-image: linear-gradient(to bottom, #3498db, #0a2536);
+  -webkit-border-radius: 19;
+  -moz-border-radius: 19;
+  border-radius: 19px;
+  font-family: Arial;
+  color: #030001;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+.btnsolve:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
+}
 
 .restart {
   position: absolute;
