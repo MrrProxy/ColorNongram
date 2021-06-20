@@ -73,7 +73,7 @@ class Game extends React.Component {
         this.pengine.query(queryJ, (success, response) => {
           if (success) {
             this.setState({
-              loading : false,
+              loading : (this.state.solvedHard !== null)? false : true,
               solvedEasy : (dif === '')? response['SolvedGrid'] : this.state.solvedEasy,
               solvedGrid : (dif === '')? response['SolvedGrid'] : this.state.solvedGrid,
               solvedNormal : (dif === 'Normal')? response['SolvedGrid'] : this.state.solvedNormal,
