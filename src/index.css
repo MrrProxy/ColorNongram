@@ -203,7 +203,7 @@ body {
 }
 
 
-.initial-container, .final-container {
+.initial-container, .load-container, .final-container {
   font-size: 50px;
   display: flex;
   height: max-content;
@@ -256,6 +256,20 @@ body {
   
 }
 
+.loading {
+  font-size: 100px;
+  font-family: 'Times New Roman', Times, serif;
+  font-style: oblique;
+  position: absolute;
+  top: 40%;
+  background: linear-gradient(to right, #ffec64 40%, #0c0c0c 50%);
+  color: transparent;
+  background-clip: text;
+  animation-name: appear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-duration: 2s; 
+}
 
 .youwin {
   font-size: 100px;

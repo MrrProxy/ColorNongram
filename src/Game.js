@@ -3,6 +3,7 @@ import PengineClient from './PengineClient';
 import Board from './Board';
 import SwitchButton from './SwitchButton';
 import {Switch} from '@material-ui/core';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import CheckBox from './CheckBox';
 import imgInicio from './Assets/img/imagenInicio.png';
 
@@ -14,10 +15,14 @@ class Game extends React.Component {
     this.state = {
       grid: null,
       solvedGrid: null,
+      solvedEasy: null,
+      solvedNormal: null,
+      solvedHard: null,
       rowClues: null,
       colClues: null,
       filaSat: null,
       colSat: null,
+      loading: false,
       waiting: false,
       status: 2,
       markMode: '#',
@@ -48,18 +53,37 @@ class Game extends React.Component {
   }
 
   handleSolve(){
-    const squaresS = JSON.stringify(this.state.grid).replaceAll('"_"', "_");
-    const pistasF = JSON.stringify(this.state.rowClues);
-    const pistasC = JSON.stringify(this.state.colClues);
-
-    const queryJ = 'grid_solve(' + squaresS + ', ' + pistasF + ', ' + pistasC + ', SolvedGrid)';
-    this.pengine.query(queryJ, (success, response) => {
-      if (success) {
-        this.setState({
-          solvedGrid: response['SolvedGrid']
+    const options = ['Hard', 'Normal', ''];
+    var queryS, queryJ, squaresS, pistasF, pistasC;
+    
+    for(var i = 0; i < 3; i++){
+      this.setState({
+        loading : true
+      })
+      const dif = options[i];
+      queryS = 'init' + dif + '(PistasFilas, PistasColumnas, Grilla)'
+      this.pengine.query(queryS, (success, response) => {
+        if (success) {
+          squaresS = JSON.stringify(response['Grilla']).replaceAll('"_"', "_");
+          pistasF = JSON.stringify(response['PistasFilas']);
+          pistasC = JSON.stringify(response['PistasColumnas']);
+        }
+      
+        queryJ = 'grid_solve(' + squaresS + ', ' + pistasF + ', ' + pistasC + ', SolvedGrid)';
+        this.pengine.query(queryJ, (success, response) => {
+          if (success) {
+            this.setState({
+              loading : false,
+              solvedEasy : (dif === '')? response['SolvedGrid'] : this.state.solvedEasy,
+              solvedGrid : (dif === '')? response['SolvedGrid'] : this.state.solvedGrid,
+              solvedNormal : (dif === 'Normal')? response['SolvedGrid'] : this.state.solvedNormal,
+              solvedHard : (dif === 'Hard')? response['SolvedGrid'] : this.state.solvedHard,
+              
+            })
+          }
         });
-      }
-    });
+      });
+    }
   }
 
   handleClick(i, j) {
@@ -125,13 +149,22 @@ class Game extends React.Component {
     var queryS;
     if (dificult === '0') {
       queryS = 'init(PistasFilas, PistasColumnas, Grilla)';
+      this.setState({
+        solvedGrid : this.state.solvedEasy
+      })
     }
     else {
       if (dificult === '1') {
         queryS = 'initNormal(PistasFilas, PistasColumnas, Grilla)';
+        this.setState({
+          solvedGrid : this.state.solvedNormal
+        })
       }
       else {
         queryS = 'initHard(PistasFilas, PistasColumnas, Grilla)';
+        this.setState({
+          solvedGrid : this.state.solvedHard
+        })
       }
     }
 
@@ -147,7 +180,6 @@ class Game extends React.Component {
           colSat: [].constructor(response['PistasColumnas'].length).fill(0)
         });
       }
-      this.handleSolve();
     })
     
     this.setState({waiting : false})
@@ -192,48 +224,63 @@ class Game extends React.Component {
       )
     }
 
-    return (
-      <div className="game">
-
-        <div className="gameSettings">
-
-          <div className="mode">
-            <label className="label">Mark mode: </label>
-            <div>
-              <SwitchButton
-                value={this.state.markMode}
-                onClick={() => this.handleMark()}
+    if(this.state.loading){
+      return (
+        <div className="load-container">
+          <div className="loading">
+            LOADING
+            <div className="barra">
+            <LinearProgress></LinearProgress>
+          </div>
+          </div>
+          
+        </div>
+      )
+    }
+    else{
+      return (
+        <div className="game">
+  
+          <div className="gameSettings">
+  
+            <div className="mode">
+              <label className="label">Mark mode: </label>
+              <div>
+                <SwitchButton
+                  value={this.state.markMode}
+                  onClick={() => this.handleMark()}
+                />
+              </div>
+            </div>
+  
+            <div className="dif">
+              <label className="label">Select difficulty: </label>
+              <CheckBox
+                value={this.state.dificult}
+                onChange={() => this.handleDificult}
+              />
+            </div>
+  
+            <div className="solve">
+              <Switch
+                onClick={() => {this.setState({status: ((this.state.status === 3)? 0 : 3)})}}
               />
             </div>
           </div>
-
-          <div className="dif">
-            <label className="label">Select difficulty: </label>
-            <CheckBox
-              value={this.state.dificult}
-              onChange={() => this.handleDificult}
-            />
-          </div>
-
-          <div className="solve">
-            <Switch
-              onClick={() => {this.setState({status: ((this.state.status === 3)? 0 : 3)})}}
-            />
-          </div>
+  
+          
+          <Board
+            grid= {(this.state.status === 0)? this.state.grid : this.state.solvedGrid}
+            rowClues={this.state.rowClues}
+            colClues={this.state.colClues}
+            onClick={(this.state.status === 0)? (i, j) => this.handleClick(i, j) : (i, j) => {}}
+            filaSat={this.state.filaSat}
+            colSat={this.state.colSat}
+          />
+  
         </div>
-
-        
-        <Board
-          grid= {(this.state.status === 0)? this.state.grid : this.state.solvedGrid}
-          rowClues={this.state.rowClues}
-          colClues={this.state.colClues}
-          onClick={(this.state.status === 0)? (i, j) => this.handleClick(i, j) : (i, j) => {}}
-          filaSat={this.state.filaSat}
-          colSat={this.state.colSat}
-        />
-
-      </div>
-    );
+      );
+    }
   }
 }
 

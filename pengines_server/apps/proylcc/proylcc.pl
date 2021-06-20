@@ -76,9 +76,9 @@ grid_solve(Grid, RowClues, ColClues, SolvedGrid):-
 
 row_solution([],[]).
 row_solution(Row, [ClueHead|ClueTail]) :-
-    generate_possible_X(Row, SpacedRow),
-    generate_painted_part(SpacedRow, PaintedRow, ClueHead),
-    (ClueTail \= [], generate_obligatory_X(PaintedRow, SolutionRow);
+    generate_possible_X(Row, PossibleRow),
+    generate_part(PossibleRow, PaintedRow, ClueHead, "#"),
+    (ClueTail \= [], generate_part(PaintedRow, SolutionRow, 1, "X");
      ClueTail = [], generate_possible_X(PaintedRow, SolutionRow)),
     row_solution(SolutionRow, ClueTail).
 
@@ -86,13 +86,10 @@ generate_possible_X(Row, Row).
 generate_possible_X(["X"|Row], RowTail) :-
     generate_possible_X(Row, RowTail).
 
-generate_painted_part(Row, Row, 0).
-generate_painted_part(["#"|Row], RowTail, N) :-
-    N > 0,
+generate_part(Row, Row, 0, _Mark).
+generate_part([Mark|Row], RowTail, N, Mark) :-
     N1 is N - 1,
-    generate_painted_part(Row, RowTail, N1).
-
-generate_obligatory_X(["X"|Row],Row).
+    generate_part(Row, RowTail, N1, Mark).
 
 
 
