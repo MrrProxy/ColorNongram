@@ -14,6 +14,7 @@ class Game extends React.Component {
     super(props);
     this.state = {
       grid: null,
+      aux: null,
       solvedGrid: null,
       solvedEasy: null,
       solvedNormal: null,
@@ -26,6 +27,7 @@ class Game extends React.Component {
       waiting: false,
       status: 2,
       markMode: '#',
+      hintMode: false,
       dificult: '0'
     };
     this.handleClick = this.handleClick.bind(this);
@@ -53,10 +55,10 @@ class Game extends React.Component {
   }
 
   handleSolve(){
-    const options = ['Hard', 'Normal', ''];
+    const options = ['', 'Normal', 'Hard'];
     var queryS, queryJ, squaresS, pistasF, pistasC;
     
-    for(var i = 0; i < 3; i++){
+    for(var i = 0; i < 2; i++){
       this.setState({
         loading : true
       })
@@ -97,37 +99,42 @@ class Game extends React.Component {
     const squaresS = JSON.stringify(this.state.grid).replaceAll('"_"', "_"); // Remove quotes for variables.
     const pistasF = JSON.stringify(this.state.rowClues);
     const pistasC = JSON.stringify(this.state.colClues);
-    const markS = JSON.stringify(this.state.markMode);
 
-    const queryS = 'put(' + markS + ', [' + i + ',' + j + ']'
+    const solvedgridAux = this.state.solvedGrid;
+    const gridAux = this.state.grid;
+    const markS = (this.state.hintMode === false)? JSON.stringify(this.state.markMode): JSON.stringify(solvedgridAux[i][j]);
+
+    if(this.state.hintMode === false || gridAux[i][j] === '_'){
+      const queryS = 'put(' + markS + ', [' + i + ',' + j + ']'
       + ',' + pistasF + ',' + pistasC + ',' + squaresS + ', GrillaRes, FilaSat, ColSat)';
 
-    this.setState({
-      waiting: true
-    });
-    this.pengine.query(queryS, (success, response) => {
-      if (success) {
-        const filAux = this.state.filaSat;
-        const colAux = this.state.colSat;
-        var statusAux = this.state.status;
-        filAux[i] = response['FilaSat'];
-        colAux[j] = response['ColSat'];
-        statusAux = (filAux.includes(0) || colAux.includes(0)) ? 0 : 1;
-        this.setState({
-          grid: response['GrillaRes'],
-          filaSat: filAux,
-          colSat: colAux,
-          waiting: false,
-          status: statusAux
-        })
-      } else {
-        this.setState({
-          waiting: false
+      this.setState({
+        waiting: true
+      });
+      this.pengine.query(queryS, (success, response) => {
+        if (success) {
+          const filAux = this.state.filaSat;
+          const colAux = this.state.colSat;
+          var statusAux = this.state.status;
+          filAux[i] = response['FilaSat'];
+          colAux[j] = response['ColSat'];
+          statusAux = (filAux.includes(0) || colAux.includes(0)) ? 0 : 1;
+          this.setState({
+            grid: response['GrillaRes'],
+            filaSat: filAux,
+            colSat: colAux,
+            waiting: false,
+            status: statusAux
+          })
+        } else {
+          this.setState({
+            waiting: false
 
-        });
-        alert("falla");
-      }
-    });
+          });
+          alert("falla");
+        }
+      }); 
+    }
   }
 
 
@@ -254,22 +261,29 @@ class Game extends React.Component {
             </div>
   
             <div className="dif">
-              <label className="label">Select difficulty: </label>
+              <label className="label">Select difficulty: {this.state.aux}</label>
               <CheckBox
                 value={this.state.dificult}
                 onChange={() => this.handleDificult}
               />
             </div>
-  
+
             <div className="solve">
-              <Switch
-                onClick={() => {this.setState({status: ((this.state.status === 3)? 0 : 3)})}}
-              />
-            </div>
-            <div className="solve1">
+              <div className="hint">
+                <label className="label">Hint Mode: </label>
+                <div className={(this.state.hintMode === true)? "hintContainerE" : "hintContainerD"}>
+                  <Switch className="switch" color="default"
+                  onClick={() => {this.setState({hintMode: ((this.state.hintMode === true)? false : true)})}}
+                  />
+                  <label className={(this.state.hintMode === true)? "labelEnabled" : "labelDisabled"}>
+                    {(this.state.hintMode === true)? "Enabled" : "Disabled"}
+                  </label>
+                </div>
+              </div>
               <button className="btnsolve"
-               onClick={() => {this.setState({status: ((this.state.status === 3)? 0 : 3)})}}
-              >Solve</button>
+               onClick={() => {this.setState({status: ((this.state.status === 3)? 0 : 3)})}}>
+                 {(this.state.status === 3)?  "Reanude Puzzle" : "Solve Puzzle"} 
+              </button>
             </div>
           </div>
   

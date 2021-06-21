@@ -42,6 +42,42 @@ body {
   }
 }
 
+@keyframes enable-disable {
+  from {
+    background: #78d678;
+  }
+  to{
+    background: #ce6957;
+  }
+}
+
+@keyframes disable-enable {
+  from {
+    background: #ce6957;
+  }
+  to{
+    background: #78d678;
+  }
+}
+
+@keyframes enable-disable-label {
+  from {
+    color: #398d39;
+  }
+  to{
+    color: #ac2008;
+  }
+}
+
+@keyframes disable-enable-label {
+  from {
+    color: #ac2008;
+  }
+  to{
+    color: #398d39;
+  }
+}
+
 
 .game {
   display: flex;
@@ -146,7 +182,7 @@ body {
   flex-direction: row;
 }
 
-.mode {
+.mode, .dif {
   margin-right: 15px;
 }
 
@@ -202,6 +238,81 @@ body {
   font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
+.solve {
+  display: grid;
+  margin-left: 7px;
+}
+
+.hintContainerD, .hintContainerE {
+  margin-top: 5px;
+  margin-bottom: 8px;
+  display: flex;
+  border-radius: 50px;
+  text-align: center;
+  border: 1px solid #999;
+  font-weight: bold;
+}
+
+.hintContainerD {
+  background-color: #e78c7c;
+  animation-name: enable-disable;
+  animation-duration: 2s;
+}
+
+.hintContainerE {
+  background-color: #8ae78a;
+  animation-name: disable-enable;
+  animation-duration: 2s;
+}
+
+.labelDisabled, .labelEnabled {
+margin-top: 5.50px;
+margin-left: 5px;
+margin-right: 5px;
+color: #fff;
+font-size: 20px;
+}
+
+.labelDisabled {
+  color: #ac2008;
+  animation-name: enable-disable-label;
+  animation-duration: 2s;
+}
+
+.labelEnabled {
+  color: #398d39;
+  animation-name: disable-enable-label;
+  animation-duration: 2s;
+}
+
+.btnsolve {
+  background: #3498db;
+  background-image: -webkit-linear-gradient(top, #3498db, #0a2536);
+  background-image: -moz-linear-gradient(top, #3498db, #0a2536);
+  background-image: -ms-linear-gradient(top, #3498db, #0a2536);
+  background-image: -o-linear-gradient(top, #3498db, #0a2536);
+  background-image: linear-gradient(to bottom, #3498db, #0a2536);
+  -webkit-border-radius: 19;
+  -moz-border-radius: 19;
+  border-radius: 19px;
+  min-height: 40px;
+  min-width: 170px;
+  max-width: 170px;
+  font-family: Arial;
+  color: #030001;
+  font-size: 18px;
+  text-decoration: none;
+}
+
+.btnsolve:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
+}
 
 .initial-container, .load-container, .final-container {
   font-size: 50px;
@@ -282,32 +393,6 @@ body {
   background-clip: text;
   animation-name: appear;
   animation-duration: 7s;
-}
-.btnsolve {
-  background: #3498db;
-  background-image: -webkit-linear-gradient(top, #3498db, #0a2536);
-  background-image: -moz-linear-gradient(top, #3498db, #0a2536);
-  background-image: -ms-linear-gradient(top, #3498db, #0a2536);
-  background-image: -o-linear-gradient(top, #3498db, #0a2536);
-  background-image: linear-gradient(to bottom, #3498db, #0a2536);
-  -webkit-border-radius: 19;
-  -moz-border-radius: 19;
-  border-radius: 19px;
-  font-family: Arial;
-  color: #030001;
-  font-size: 20px;
-  padding: 10px 20px 10px 20px;
-  text-decoration: none;
-}
-
-.btnsolve:hover {
-  background: #3cb0fd;
-  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
-  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
-  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
-  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
-  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
-  text-decoration: none;
 }
 
 .restart {
