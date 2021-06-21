@@ -282,7 +282,7 @@ class Game extends React.Component {
               </div>
               <button className="btnsolve"
                onClick={() => {this.setState({status: ((this.state.status === 3)? 0 : 3)})}}>
-                 {(this.state.status === 3)?  "Reanude Puzzle" : "Solve Puzzle"} 
+                 {(this.state.status === 3)?  "Resume Puzzle" : "Solve Puzzle"} 
               </button>
             </div>
           </div>
