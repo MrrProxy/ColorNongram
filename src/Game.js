@@ -58,7 +58,7 @@ class Game extends React.Component {
     const options = ['', 'Normal', 'Hard'];
     var queryS, queryJ, squaresS, pistasF, pistasC;
     
-    for(var i = 0; i < 2; i++){
+    for(var i = 0; i < 3; i++){
       this.setState({
         loading : true
       })
